@@ -1,1 +1,1 @@
-This is an Instagram app clone which is made using Tailwind Css, Node Js, Express Js, Ejs, Mongodb atlas etc. Live link: https://instagramclone-dewg.onrender.com/
+This is an Instagram app clone which is made using Tailwind Css, Node Js, Express Js, Ejs, Mongodb atlas etc. Live link: [https://instagramclone-dewg.onrender.com/](https://avijitinstagramclone.onrender.com/)https://avijitinstagramclone.onrender.com/
