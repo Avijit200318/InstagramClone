@@ -1,0 +1,73 @@
+<% include ./partials/header.ejs %>
+    <div class="w-full min-h-screen bg-black px-4 py-5 sm:px-8 lg:px-12  xl:pr-[10rem] md:pl-20 lg:pl-24">
+        <div class="border-2 border-zinc-800 flex items-center justify-between px-2 py-1 rounded-md bg-zinc-800 md:text-xl md:px-4">
+            <i class="text-white ri-search-line"></i>
+            <input id="inputUsername" class="ml-1 w-full bg-black outline-none text-white pl-2 bg-zinc-800 lg:py-[0.2rem]" type="text"
+                placeholder="search username">
+        </div>
+        <div class="users">
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.7/axios.min.js"
+        integrity="sha512-NQfB/bDaB8kaSXF8E77JjhHG5PM6XVRxvHzkZiwl3ddWCEPBa23T76MuWSwAJdMGJnmQqM0VeY9kFszsrBEFrQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        <script>
+    function convertBufferToBase64(bufferData) {
+        if (bufferData && bufferData.type === 'Buffer') {
+            const dataArray = bufferData.data;
+            
+            // Convert the array of bytes to a Blob object
+            const blob = new Blob([new Uint8Array(dataArray)], { type: 'application/octet-stream' });
+
+            return new Promise((resolve, reject) => {
+                // Read the Blob as a data URL
+                const reader = new FileReader();
+                reader.onload = function() {
+                    const base64Image = reader.result.split(',')[1]; // Get the Base64 data part
+                    resolve(base64Image);
+                };
+                reader.onerror = function(error) {
+                    reject(error);
+                };
+                reader.readAsDataURL(blob);
+            });
+        } else {
+            return Promise.reject(new Error('Invalid buffer data'));
+        }
+    }
+
+    let clutter = "";
+    const inputUsername = document.querySelector("#inputUsername");
+    inputUsername.addEventListener('input', function () {
+        axios.get(`/username/${inputUsername.value}`)
+            .then(function (data) {
+                clutter = "";
+                data.data.forEach(async function (ele) {
+                    try {
+                        const base64Image = await convertBufferToBase64(ele.profileImage.data);
+                        clutter += `<a href="/profile/${ele._id}" class="outline-none">
+                            <div class="text-white flex items-center gap-2 mt-5 md:mt-6">
+                                <div class="image w-12 h-12 rounded-full bg-sky-100 overflow-hidden md:w-16 md:h-16">
+                                    <img class="w-full h-full " src="data:${ele.profileImage.contentType};base64,${base64Image}" alt="">
+                                </div>
+                                <div class="text">
+                                    <h3 class="md:text-xl">${ele.username}</h3>
+                                    <h4 class="text-xs opacity-30 leading-none md:text-sm">${ele.name}</h4>
+                                </div>
+                            </div>            
+                        </a>`;
+                        document.querySelector(".users").innerHTML = clutter;
+                    } catch (error) {
+                        console.error(error); // Log the error for debugging
+                    }
+                });
+            })
+            .catch(function(error) {
+                console.error(error); // Log the error for debugging
+            });
+    });
+</script>
+
+        
+    <% include ./partials/footer.ejs %>

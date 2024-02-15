@@ -1,0 +1,14 @@
+<% include ./partials/header.ejs %>
+  <div class="w-full min-h-screen bg-black text-white py-5 flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center gap-5 px-4 relative items-center">
+      <img class="w-52" src="/images/logo2.png" alt="">
+      <p class="error text-sm font-semibold text-red-600 absolute top-16"><%= error%></p>
+      <form class="w-auto" action="/login" method="post">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-80 bg-black sm:w-[25rem] md:w-[30rem] md:py-3 md:text-lg" type="text" placeholder="username" name="username" autocomplete="off">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-800 rounded-md block w-80 bg-black sm:w-[25rem] md:w-[30rem] md:py-3 md:text-lg" type="password" placeholder="password" name="password" autocomplete="off">
+        <input class="w-80 bg-blue-500 px-3 py-3 rounded-md mt-2 cursor-pointer sm:w-[25rem] md:w-[30rem] md:py-3 md:text-lg" type="submit" value="Log In">
+      </form>
+      <span class="text-lg">Don't have an account ? <a href="/" class="text-blue-500">Sign Up</a></span>
+    </div>
+  </div>
+<% include ./partials/footer.ejs %>

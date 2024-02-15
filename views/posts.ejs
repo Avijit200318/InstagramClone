@@ -1,0 +1,148 @@
+<% include ./partials/header.ejs %>
+    <div class="postNav flex gap-8 px-4 w-full bg-black text-white py-2 md:pl-12">
+        <div><a href="/profile"><i class="fa-solid fa-arrow-right fa-flip-horizontal text-lg"></i></a></div>
+        <h3 class="font-semibold text-xl">Posts</h3>
+    </div>
+    <div class="bg-black text-white min-h-[70vh]">
+        <div class="posts mb-8 pt-4 sm:flex sm:flex-col sm:items-center">
+            <div class="post w-full min-h-[50vh] sm:px-8 sm:w-[30rem] md:px-[9rem] md:w-[45rem]">
+                <div class="title pl-4 pr-6 flex items-center gap-2 flex justify-between sm:pl-2">
+                    <a href="/profile/<%= post.user._id%>">
+                        <div class="flex gap-2 items-center">
+                            <div class="w-8 h-8 bg-sky-100 rounded-full overflow-hidden sm:w-12 sm:h-12">
+                                <img src="data:<%= post.user.profileImage.contentType %>;base64,<%= post.user.profileImage.data.toString('base64')%>"
+                                    alt="" class="w-full h-full object-cover">
+                            </div>
+                            <h4 class="text-sm relative sm:text-base 2xl:text-lg">
+                                <%= post.user.username %>
+                            </h4>
+                        </div>
+                    </a>
+                    <div class="cursor-pointer relative">
+                        <% if(post.user.username===user.username){%>
+                            <h1 onclick="handleDelete('deleteBox')"><i class="fa-solid fa-ellipsis-vertical"></i></h1>
+                            <%}else{%>
+                                <h1><i class="fa-solid fa-ellipsis-vertical"></i></h1>
+                                <%}%>
+                                    <div id="deleteBox"
+                                        class="flex gap-2 flex-col absolute border-[1px] border-red-600 text-sm text-red-600 right-0 top-10 px-[0.2rem] py-[0.2rem] bg-zinc-900 hidden">
+                                        <a href="/deletePost/<%= post._id%>">
+                                            <div class="flex gap-2">
+                                                <h3><i class="fa-regular fa-trash-can"></i></h3>
+                                                <h3>Delete</h3>
+                                            </div>
+                                        </a>
+                                        <a href="/editPost/<%= post._id%>">
+                                            <div class="flex gap-2 text-white border-t-2 pt-2 border-zinc-800">
+                                                <h3><i class="fa-regular fa-pen-to-square"></i></h3>
+                                                <h3>Edit</h3>
+                                            </div>
+                                        </a>
+                                    </div>
+                    </div>
+                </div>
+                <div class="w-full h-96 mt-4 bg-sky-100 overflow-hidden sm:h-[30rem] md:h-[35rem]">
+                    <img src="data:<%= post.picture.contentType %>;base64,<%= post.picture.data.toString('base64')%>"
+                        alt="" class="w-full h-full object-cover">
+                </div>
+                <div class="options w-full px-4 flex justify-between items-center text-[1.4rem]">
+                    <div class="flex gap-3 mt-2">
+                        <a href="/like/mypost/<%= post._id %>">
+                            <i class="ri-heart-3-fill text-red-600 sm:text-[1.6rem]"></i>
+                        </a>
+                        <i class="ri-chat-3-line"></i>
+                        <!-- <i class="ri-share-circle-line"></i> -->
+                        <i class="mt-[0.35rem] text-[1.2rem] fa-regular fa-paper-plane fa-rotate-by"
+                            style="--fa-rotate-angle: 20deg;"></i>
+                    </div>
+                    <i class=" ri-bookmark-line sm:text-[1.6rem]"></i>
+                </div>
+                <h3 class="px-4 mt-2 text-sm leading-none tracking-tight sm:text-base">
+                    <%= post.likes.length %> likes
+                </h3>
+                <h2 class="text-white font-light text-sm mt-2 sm:text-base">
+                    <span class="font-semibold pl-4 pr-2">
+                        <%= post.user.username %>
+                    </span>
+                    <%= post.caption %>
+                </h2>
+            </div>
+        </div>
+    </div>
+
+    <!-- next part -->
+    <div class="posts mb-20 pt-4 bg-black text-white sm:flex sm:flex-col sm:items-center">
+        <% postUser.posts.forEach(function(ele, index){ %>
+            <% if(post._id.toString() !==ele._id.toString()) { %>
+                <div class="post w-full min-h-[50vh] mb-12 sm:px-8 sm:w-[30rem] md:px-[9rem] md:w-[45rem]">
+                    <div class="title pl-4 pr-6 flex items-center justify-between">
+                        <a href="/profile/<%= postUser._id%>">
+                            <div class="flex gap-2 items-center">
+                                <div class="w-8 h-8 bg-sky-100 rounded-full overflow-hidden sm:w-12 sm:h-12">
+                                    <img src="data:<%= postUser.profileImage.contentType %>;base64,<%= postUser.profileImage.data.toString('base64')%>"
+                                        alt="" class="w-full h-full object-cover">
+                                </div>
+                                <h4 class="text-sm sm:text-base 2xl:text-lg">
+                                    <%= postUser.username %>
+                                </h4>
+                            </div>
+                        </a>
+                        <div class="cursor-pointer relative sm:text-xl">
+                            <%if(user.username===postUser.username){%>
+                                <h1 onclick="handleDelete('deleteBox<%= index%>')"><i
+                                        class="fa-solid fa-ellipsis-vertical"></i></h1>
+                                <%}else{%>
+                                    <h1><i class="fa-solid fa-ellipsis-vertical"></i></h1>
+                                    <%}%>
+                                            <div id="deleteBox<%= index%>"
+                                                class="flex gap-2 flex-col absolute border-[1px] border-red-600 text-sm text-red-600 right-0 top-10 px-[0.2rem] py-[0.2rem] bg-zinc-900 hidden">
+                                                <a href="/deletePost/<%= ele._id%>">
+                                                    <div class="flex gap-2">
+                                                        <h3><i class="fa-regular fa-trash-can"></i></h3>
+                                                        <h3>Delete</h3>
+                                                    </div>
+                                                </a>
+                                                <a href="/editPost/<%= ele._id%>">
+                                                    <div class="flex gap-2 text-white border-t-2 pt-2 border-zinc-800">
+                                                        <h3><i class="fa-regular fa-pen-to-square"></i></h3>
+                                                        <h3>Edit</h3>
+                                                    </div>
+                                                </a>
+                                            </div>
+                        </div>
+                    </div>
+                    <div class="w-full h-96 mt-4 bg-sky-100 overflow-hidden sm:h-[30rem] md:h-[35rem]">
+                        <img src="data:<%= ele.picture.contentType %>;base64,<%= ele.picture.data.toString('base64')%>"
+                            alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div class="options w-full px-4 flex justify-between items-center text-[1.4rem]">
+                        <div class="flex gap-3 mt-2">
+                            <a href="/like/mypost/<%= ele._id %>">
+                                <i class="ri-heart-3-fill text-red-600"></i>
+                            </a>
+                            <i class="ri-chat-3-line sm:text-[1.6rem]"></i>
+                            <!-- <i class="ri-share-circle-line"></i> -->
+                            <i class="mt-[0.35rem] text-[1.2rem] fa-regular fa-paper-plane fa-rotate-by sm:text-[1.5rem]"
+                                style="--fa-rotate-angle: 20deg;"></i>
+                        </div>
+                        <i class=" ri-bookmark-line sm:text-[1.6rem]"></i>
+                    </div>
+                    <h3 class="px-4 mt-2 text-sm leading-none tracking-tight sm:text-base">
+                        <%= ele.likes.length %> likes
+                    </h3>
+                    <h2 class="text-white font-light text-sm mt-2">
+                        <span class="font-semibold pl-4 pr-2 sm:text-base">
+                            <%= postUser.username %>
+                        </span>
+                        <%= ele.caption %>
+                    </h2>
+                </div>
+                <% }%>
+                    <% }) %>
+    </div>
+    <script>
+        function handleDelete(id) {
+            document.getElementById(id).classList.toggle("hidden");
+        }
+    </script>
+    <% include ./partials/footer.ejs %>
