@@ -1,8 +1,1 @@
-login & register page
-feed page
-profile page
-picture
-story feature
-edit details
-share to story
-search accounts
+This is an Instagram app clone which is made using Tailwind Css, Node Js, Express Js, Ejs, Mongodb atlas etc. Live link: https://instagramclone-dewg.onrender.com/
