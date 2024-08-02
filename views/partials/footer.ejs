@@ -1,0 +1,28 @@
+<% if(footer){ %>
+    <div class="footer text-white flex justify-between items-center w-full fixed bottom-0 z-[10] bg-black px-8 py-2 border-t-[2px] border-zinc-800 md:fixed md:top-0 md:pb-4 md:pt-6 md:flex-col md:px-4 md:pt-0 md:left-0 md:h-full md:w-16 md:border-0 md:z-30 md:border-r-2 md:pr-4 lg:w-20">
+        <a href="/feed"><i class="text-[1.6rem] ri-home-line sm:text-[1.7rem]"></i></a>
+        <a href="/search"><i class="text-[1.6rem] ri-search-line sm:text-[1.7rem]"></i></a>
+        <a href="/upload"><i class="text-[1.6rem] ri-add-box-line sm:text-[1.7rem]"></i></a>
+        <a href="/settings" class="hidden md:block"><i class="text-[1.4rem] ri-menu-line sm:text-[1.7rem]"></i></a>
+        <a href="/profile">
+          <div class="w-10 h-10 bg-zinc-300 rounded-full overflow-hidden xl:w-12 xl:h-12">
+            <%if(user.profileImage && user.profileImage.contentType && user.profileImage.data){%>
+              <img class="w-full h-full object-cover" src="data:<%= user.profileImage.contentType%>;base64,<%= user.profileImage.data.toString('base64')%>" alt="">
+              <%}%>
+          </div>
+        </a>
+      </div>
+<% } %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) { 
+      var scrollpos = localStorage.getItem('scrollpos');
+      if (scrollpos) window.scrollTo(0, scrollpos);
+  });
+
+  window.onbeforeunload = function(e) {
+      localStorage.setItem('scrollpos', window.scrollY);
+  };
+</script>
+</body>
+</html>

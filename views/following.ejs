@@ -1,0 +1,51 @@
+<% include ./partials/header.ejs %>
+    <div class="postNav flex gap-8 px-4 w-full bg-black text-white py-4">
+        <div><a href="/profile"><i class="fa-solid fa-arrow-right fa-flip-horizontal text-lg"></i></a></div>
+        <h3 class="font-semibold text-lg md:pl-4 lg:pl-8 lg:text-xl">
+            <%= user.username%>
+        </h3>
+    </div>
+    <div class="flex justify-between text-sm font-semibold border-b-[1px] border-zinc-600 relative">
+        <a class="w-[33.3%]" href="/followers/<%= user._id%>">
+            <h3 class="py-2 text-center <%= active ==='followers' ? 'border-b-[1px]': 'border-0'%> md:text-base lg:text-lg 2xl:text-xl">
+                <%= user.followers.length%> followers
+            </h3>
+        </a>
+        <a class="w-[33.3%]" href="/following/<%= user._id%>">
+            <h3 class="py-2 text-center <%= active === 'following' ? 'border-b-[1px]': 'border-0'%> md:text-base lg:text-lg 2xl:text-xl">
+                <%= user.following.length%> following
+            </h3>
+        </a>
+        <h3 class="py-2 w-[33.3%] text-center md:text-base lg:text-lg 2xl:text-xl">0 subscriptions</h3>
+    </div>
+
+    <div class="w-full bg-black px-4 py-2 md:pl-20 lg:pl-24">
+        <div class="border-2 border-zinc-800 flex items-center justify-between px-2 py-1 rounded-md bg-zinc-800">
+            <i class="text-white ri-search-line"></i>
+            <input id="inputUsername" class="ml-1 w-full bg-black outline-none text-white pl-2 bg-zinc-800" type="text"
+                placeholder="Search">
+        </div>
+    </div>
+
+    <div class="px-4 md:pl-20 lg:pl-24">
+        <% followUser.forEach(function(ele){%>
+            <a href="/profile/<%= ele._id%>">
+                <div class="text-white flex items-center gap-2 mt-5 md:mt-6">
+                    <div class="image w-12 h-12 rounded-full bg-sky-100 overflow-hidden md:w-16 md:h-16">
+                        <img class="w-full h-full "
+                            src="data:<%= ele.profileImage.contentType%>;base64,<%= ele.profileImage.data.toString('base64')%>"
+                            alt="">
+                    </div>
+                    <div class="text">
+                        <h3 class="md:text-xl">
+                            <%= ele.username%>
+                        </h3>
+                        <h4 class="text-xs opacity-30 leading-none md:text-sm">
+                            <%= ele.name%>
+                        </h4>
+                    </div>
+                </div>
+            </a>
+            <%})%>
+    </div>
+    <% include ./partials/footer.ejs %>
