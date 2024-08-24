@@ -1,5 +1,5 @@
 # InstagramClone
- **Live Link:** [https://avijitinteclone.onrender.com](https://clonewebsite-9yj0.onrender.com)
+ **Live Link:** [https://clonewebsite-9yj0.onrender.com](https://clonewebsite-9yj0.onrender.com)
  
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
